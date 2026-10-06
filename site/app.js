@@ -50,15 +50,17 @@
       cell.title = day.date + ': ' + day.count + (lang === 'zh' ? ' 次贡献' : ' contributions');
       graph.appendChild(cell);
     }
-    const accountSync = data.scope === 'account';
+    const validScope = data.scope === 'account' || data.scope === 'public';
     const range = days[0].date + ' – ' + days[days.length - 1].date;
     const total = days.reduce((sum, day) => sum + day.count, 0);
     summary.textContent = lang === 'zh' ? total.toLocaleString('zh-CN') + ' 次贡献 · 最近一年' : total.toLocaleString('en-US') + ' contributions in the past year';
+    if (data.scope === 'public') summary.textContent = lang === 'zh' ? total.toLocaleString('zh-CN') + ' 次公开贡献 · 最近一年' : total.toLocaleString('en-US') + ' public contributions in the past year';
     const updated = new Date(data.updatedAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US', {timeZone:'Asia/Shanghai', dateStyle:'medium', timeStyle:'short'});
-    const status = refreshing ? (lang === 'zh' ? '刷新中' : 'Refreshing') : feedStatus === 'live' ? (lang === 'zh' ? '已加载最新快照' : 'Latest snapshot loaded') : (lang === 'zh' ? '已保存快照' : 'Saved snapshot');
-    caption.textContent = range + ' · ' + status + ': ' + updated + ' (UTC+8) · ' + (lang === 'zh' ? 'GitHub 数据每小时同步' : 'GitHub sync scheduled hourly');
-    graph.hidden = !accountSync;
-    if (!accountSync) {
+    caption.textContent = range + ' · ' + (lang === 'zh' ? '数据更新于 ' : 'Data updated ') + updated + ' (UTC+8)';
+    if (feedStatus === 'offline') caption.textContent += lang === 'zh' ? ' · 已保存快照' : ' · Saved snapshot';
+    if (refreshing) caption.textContent += lang === 'zh' ? ' · 刷新中' : ' · Refreshing';
+    graph.hidden = !validScope;
+    if (!validScope) {
       summary.textContent = lang === 'zh' ? '当前记录不完整 · 等待包含私有贡献的同步' : 'Incomplete calendar · awaiting sync with private contributions';
       caption.textContent = lang === 'zh' ? '需要 GitHub 授权才能同步完整的贡献日历。' : 'GitHub authorization is required to sync the complete contribution calendar.';
     }

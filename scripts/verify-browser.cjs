@@ -99,14 +99,19 @@ const { pathToFileURL } = require('node:url');
     await page.locator('#activity-refresh').click();
     await page.waitForFunction(() => !document.getElementById('activity-refresh').disabled);
     assert.match(await page.locator('.activity-summary').textContent(), new RegExp((snapshot.total + 1) + ' contributions'));
-    assert.match(await page.locator('.activity-caption').textContent(), /Latest snapshot loaded/);
+    assert.match(await page.locator('.activity-caption').textContent(), /Data updated/);
     console.log('PASS rolling-year summary, language switch, offline/invalid response fallback, and changed live data');
-    // The incomplete public snapshot must not be presented as a full calendar.
-    networkMode = 'invalid';
-    await page.goto(base + '?lang=en');
+    // Public-only calendars remain usable and clearly label the scope.
+    fixture.scope = 'public';
+    fixture.source = 'https://github.com/users/bruuuuuceliu/contributions';
+    await page.locator('#activity-refresh').click();
     await page.waitForFunction(() => !document.getElementById('activity-refresh').disabled);
-    assert.match(await page.locator('.activity-summary').textContent(), /Incomplete calendar/);
-    assert.equal(await page.locator('.activity-graph').isVisible(), false);
+    assert.match(await page.locator('.activity-summary').textContent(), /public contributions/);
+    assert.equal(await page.locator('.activity-graph').isVisible(), true);
+    networkMode = 'invalid';
+    await page.locator('#activity-refresh').click();
+    await page.waitForFunction(() => !document.getElementById('activity-refresh').disabled);
+    assert.equal(await page.locator('.activity-graph').isVisible(), true);
     assert.deepEqual(errors, []);
     console.log('PASS language round trip and no browser/resource errors');
   } finally { await browser.close(); }

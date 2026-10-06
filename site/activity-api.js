@@ -1,6 +1,7 @@
 (() => {
   function normalize(payload) {
-    if (!payload || payload.scope !== 'account' || payload.source !== 'https://api.github.com/graphql' || !Number.isFinite(Date.parse(payload.updatedAt))) throw new Error('Account sync unavailable');
+    const sources = { account: 'https://api.github.com/graphql', public: 'https://github.com/users/bruuuuuceliu/contributions' };
+    if (!payload || !sources[payload.scope] || payload.source !== sources[payload.scope] || !Number.isFinite(Date.parse(payload.updatedAt))) throw new Error('Calendar sync unavailable');
     function validate(days) {
       if (!Array.isArray(days) || days.length < 365) throw new Error('Incomplete calendar');
       let previous;
@@ -23,7 +24,7 @@
     return payload;
   }
   async function fetchLatest() {
-    // Fetch our authenticated build output, never an anonymous feed that omits private counts.
+    // Fetch our validated build output; scope identifies public versus authenticated counts.
     if (location.protocol !== 'file:') {
       const response = await fetch('activity.json?t=' + Date.now(), { cache: 'no-store', signal: AbortSignal.timeout(15000), credentials: 'omit' });
       if (!response.ok) throw new Error('Snapshot unavailable');

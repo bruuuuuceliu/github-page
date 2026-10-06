@@ -8,6 +8,8 @@ import argparse
 import json
 import os
 import subprocess
+import re
+from html.parser import HTMLParser
 from datetime import date, datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -48,7 +50,7 @@ def validate_calendar(calendar):
         raise ValueError('Contribution total does not match daily counts')
     return days
 
-def export(year_calendars, last_calendar):
+def export(year_calendars, last_calendar, scope='account'):
     all_days, totals = [], {}
     for year, calendar in sorted(year_calendars.items()):
         days = validate_calendar(calendar)
@@ -62,7 +64,7 @@ def export(year_calendars, last_calendar):
     by_date = {day['date']: day['count'] for day in all_days}
     if any(by_date.get(day['date']) != day['count'] for day in days):
         raise ValueError('Year and past-year counts disagree; retry sync')
-    return {'source': SOURCE, 'scope': 'account', 'profile': 'https://github.com/' + LOGIN,
+    return {'source': SOURCE if scope == 'account' else 'https://github.com/users/' + LOGIN + '/contributions', 'scope': scope, 'profile': 'https://github.com/' + LOGIN,
             'updatedAt': datetime.now(timezone.utc).isoformat(),
             'total': last_calendar['totalContributions'], 'allTotal': sum(totals.values()),
             'totals': totals, 'days': days, 'allDays': all_days}
@@ -100,18 +102,84 @@ def sync(token):
         calendars[year] = result['contributionsCollection']['contributionCalendar']
     return export(calendars, user['contributionsCollection']['contributionCalendar'])
 
+class PublicCalendarParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.cells, self.counts = {}, {}
+        self.tooltip, self.tooltip_text = None, ''
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if attrs.get('data-date') and attrs.get('data-level') is not None:
+            self.cells[attrs['id']] = (attrs['data-date'], int(attrs['data-level']))
+        if tag == 'tool-tip':
+            self.tooltip, self.tooltip_text = attrs.get('for'), ''
+
+    def handle_data(self, text):
+        if self.tooltip:
+            self.tooltip_text += text
+
+    def handle_endtag(self, tag):
+        if tag == 'tool-tip' and self.tooltip:
+            match = re.match(r'(No|[\d,]+) contributions? on ', self.tooltip_text.strip())
+            if match:
+                self.counts[self.tooltip] = 0 if match[1] == 'No' else int(match[1].replace(',', ''))
+            self.tooltip = None
+
+    def calendar(self, year, today):
+        days = []
+        for cell, (day, level) in self.cells.items():
+            if day.startswith(str(year) + '-') and day <= today.isoformat():
+                if cell not in self.counts:
+                    raise ValueError('GitHub calendar tooltip missing')
+                days.append({'date': day, 'contributionCount': self.counts[cell],
+                             'contributionLevel': list(LEVELS)[level]})
+        return {'totalContributions': sum(day['contributionCount'] for day in days),
+                'weeks': [{'contributionDays': days}]}
+
+def sync_public():
+    today = datetime.now(ZoneInfo('Asia/Shanghai')).date()
+    try:
+        start = today.replace(year=today.year - 1)
+    except ValueError:
+        start = today.replace(year=today.year - 1, day=28)
+    calendars = {}
+    # Only the two years needed for the rolling window. GitHub returns whole calendar years.
+    for year in range(start.year, today.year + 1):
+        url = f'https://github.com/users/{LOGIN}/contributions?from={year}-12-01&to={year}-12-31'
+        request = Request(url, headers={'User-Agent': 'Bruce-Liu-project-page', 'Accept-Language': 'en'})
+        with urlopen(request, timeout=30) as response:
+            parser = PublicCalendarParser()
+            parser.feed(response.read().decode())
+        calendar = parser.calendar(year, today)
+        days = validate_calendar(calendar)
+        if days[0]['date'] != f'{year}-01-01' or days[-1]['date'] != min(date(year, 12, 31), today).isoformat():
+            raise ValueError('GitHub returned an incomplete calendar year')
+        calendars[str(year)] = calendar
+    recent = [day for calendar in calendars.values() for week in calendar['weeks']
+              for day in week['contributionDays'] if start.isoformat() <= day['date'] <= today.isoformat()]
+    last = {'totalContributions': sum(day['contributionCount'] for day in recent),
+            'weeks': [{'contributionDays': recent}]}
+    return export(calendars, last, scope='public')
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=Path, help='Offline fixture with years and last calendars')
+    parser.add_argument('--public', action='store_true', help='Sync public counts directly from GitHub without a token')
     options = parser.parse_args()
     if options.input:
         fixture = json.loads(options.input.read_text())
         data = export(fixture['years'], fixture['last'])
+    elif options.public:
+        data = sync_public()
     else:
         token = os.environ.get('ACTIVITY_TOKEN') or os.environ.get('GH_TOKEN')
         if not token:
-            token = subprocess.check_output(['gh', 'auth', 'token'], text=True).strip()
-        data = sync(token)
+            try:
+                token = subprocess.check_output(['gh', 'auth', 'token'], text=True, stderr=subprocess.DEVNULL).strip()
+            except (FileNotFoundError, subprocess.CalledProcessError):
+                token = None
+        data = sync(token) if token else sync_public()
     root = Path(__file__).resolve().parents[1]
     serialized = json.dumps(data, ensure_ascii=False)
     # Write only after every response and cross-check passes, preserving the old snapshot on failure.

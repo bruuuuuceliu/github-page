@@ -41,7 +41,11 @@ jobs:
           if [ -n "$ACTIVITY_TOKEN" ]; then
             python3 scripts/update-activity.py
           else
-            echo 'ACTIVITY_TOKEN is not configured; keeping the existing snapshot and its original timestamp.'
+            if python3 -c "import json; from pathlib import Path; assert json.loads(Path('site/activity.json').read_text()).get('scope') == 'account'"; then
+              echo 'Keeping authenticated snapshot; configure a read:user ACTIVITY_TOKEN for automatic private-count updates.'
+            else
+              python3 scripts/update-activity.py --public
+            fi
           fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

@@ -60,6 +60,22 @@ class CalendarTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'read:user'):
                 activity.fetch('test-token')
 
+    def test_public_parser_uses_dates_and_counts_from_github_tooltips(self):
+        parser = activity.PublicCalendarParser()
+        parser.feed('<td id="a" data-date="2025-10-11" data-level="3"></td>'
+                    '<tool-tip for="a">9 contributions on October 11th.</tool-tip>'
+                    '<td id="b" data-date="2025-10-12" data-level="0"></td>'
+                    '<tool-tip for="b">No contributions on October 12th.</tool-tip>')
+        data = parser.calendar(2025, date(2026, 10, 7))
+        self.assertEqual(data['totalContributions'], 9)
+        self.assertEqual(activity.validate_calendar(data)[0]['count'], 9)
+
+    def test_public_parser_rejects_missing_tooltip_instead_of_inventing_zero(self):
+        parser = activity.PublicCalendarParser()
+        parser.feed('<td id="a" data-date="2025-10-11" data-level="3"></td>')
+        with self.assertRaisesRegex(ValueError, 'tooltip missing'):
+            parser.calendar(2025, date(2026, 10, 7))
+
     def test_owner_token_with_read_user_is_accepted(self):
         import io
         response = io.BytesIO(json.dumps({'data': {'viewer': {'login': activity.LOGIN},
