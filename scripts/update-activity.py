@@ -11,6 +11,7 @@ import subprocess
 from datetime import date, datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 LOGIN = 'bruuuuuceliu'
 SOURCE = 'https://api.github.com/graphql'
@@ -85,8 +86,12 @@ def fetch(token, start=None, end=None):
     return data['user']
 
 def sync(token):
-    user = fetch(token)
-    today = datetime.now(timezone.utc).date()
+    today = datetime.now(ZoneInfo('Asia/Shanghai')).date()
+    try:
+        start = today.replace(year=today.year - 1)
+    except ValueError:  # February 29 becomes February 28 in a non-leap year.
+        start = today.replace(year=today.year - 1, day=28)
+    user = fetch(token, start.isoformat() + 'T00:00:00Z', today.isoformat() + 'T23:59:59Z')
     years = range(int(user['createdAt'][:4]), today.year + 1)
     calendars = {}
     for year in years:

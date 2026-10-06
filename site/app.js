@@ -1,6 +1,6 @@
 (() => {
   const zh = {
-    skip:'跳转到项目', homeLabel:'Bruce Liu，首页', navLabel:'主导航', languageLabel:'页面语言', navProjects:'项目', navFocus:'技术方向', navAbout:'关于', heroTitle:'Bruce Liu', heroIntro:'Python、AI Agent，以及围绕它们构建的系统。这里记录开源项目、原型和有用的实验。', seeProjects:'查看项目', githubProfile:'GitHub 主页', projectsKicker:'01 / 项目', projectsTitle:'开源贡献。', projectsNote:'为开源 Agent 生态贡献工具与工作流。', openSource:'开源项目', evoDescription:'一个自我演进的 AI Agent 生态。我的主要开源贡献方向，覆盖工具、工作流、记忆、MCP 与检索。', viewOnGithub:'在 GitHub 查看', activityKicker:'02 / 活跃记录', activityTitle:'GitHub 活动', activityNote:'跨仓库的主页贡献记录，可查看最近一年或选择年份。', activityPeriod:'时间范围', refreshActivity:'刷新', activitySource:'在 GitHub 查看 ↗', graphLabel:'GitHub 贡献日历', focusKicker:'03 / 技术方向', focusTitle:'技术方向', focusNote:'我的仓库与实验项目中持续出现的方向。', focusAgent:'Agent 工程', focusRag:'检索系统', focusBackend:'Python 后端', focusPlatform:'平台与交付', aboutTitle:'你好，我是 Bruce。', aboutText:'我是一名在上海工作的 Python 开发者，主要关注 AI Agent 系统和后端基础设施。这个页面是我愿意公开分享的项目索引。', backToTop:'返回顶部 ↑'
+    skip:'跳转到项目', homeLabel:'Bruce Liu，首页', navLabel:'主导航', languageLabel:'页面语言', navProjects:'项目', navFocus:'技术方向', navAbout:'关于', heroTitle:'Bruce Liu', heroIntro:'Python、AI Agent，以及围绕它们构建的系统。这里记录开源项目、原型和有用的实验。', seeProjects:'查看项目', githubProfile:'GitHub 主页', projectsKicker:'01 / 项目', projectsTitle:'开源贡献。', projectsNote:'为开源 Agent 生态贡献工具与工作流。', openSource:'开源项目', evoDescription:'一个自我演进的 AI Agent 生态。我的主要开源贡献方向，覆盖工具、工作流、记忆、MCP 与检索。', viewOnGithub:'在 GitHub 查看', activityKicker:'02 / 活跃记录', activityTitle:'GitHub 活动', refreshActivity:'刷新', activitySource:'在 GitHub 查看 ↗', graphLabel:'GitHub 贡献日历', focusKicker:'03 / 技术方向', focusTitle:'技术方向', focusNote:'我的仓库与实验项目中持续出现的方向。', focusAgent:'Agent 工程', focusRag:'检索系统', focusBackend:'Python 后端', focusPlatform:'平台与交付', aboutTitle:'你好，我是 Bruce。', aboutText:'我是一名在上海工作的 Python 开发者，主要关注 AI Agent 系统和后端基础设施。这个页面是我愿意公开分享的项目索引。', backToTop:'返回顶部 ↑'
   };
   const textNodes = [...document.querySelectorAll('[data-i18n]')];
   const ariaNodes = [...document.querySelectorAll('[data-i18n-aria]')];
@@ -10,7 +10,6 @@
   let feedStatus = 'snapshot';
   let refreshing = false;
   let lastAttempt = 0;
-  const periodSelect = document.getElementById('activity-period');
   const refreshButton = document.getElementById('activity-refresh');
   function setLanguage(lang, updateUrl = false) {
     currentLanguage = lang;
@@ -29,17 +28,7 @@
     const graph = document.querySelector('.activity-graph');
     const caption = document.querySelector('.activity-caption');
     const data = window.githubActivity;
-    const selectedPeriod = periodSelect.value || 'last';
-    const availableYears = Object.keys(data?.totals || {}).sort().reverse();
-    periodSelect.replaceChildren();
-    for (const value of ['last', ...availableYears]) {
-      const option = document.createElement('option'); option.value = value;
-      option.textContent = value === 'last' ? (lang === 'zh' ? '最近一年' : 'Past year') : value;
-      periodSelect.appendChild(option);
-    }
-    periodSelect.value = ['last', ...availableYears].includes(selectedPeriod) ? selectedPeriod : 'last';
-    const period = periodSelect.value;
-    const days = period === 'last' ? data?.days : data?.allDays?.filter(day => day.date.startsWith(period + '-'));
+    const days = data?.days;
     const summary = document.querySelector('.activity-summary');
     refreshButton.disabled = refreshing;
     graph.replaceChildren();
@@ -64,7 +53,7 @@
     const accountSync = data.scope === 'account';
     const range = days[0].date + ' – ' + days[days.length - 1].date;
     const total = days.reduce((sum, day) => sum + day.count, 0);
-    summary.textContent = lang === 'zh' ? total.toLocaleString('zh-CN') + ' 次贡献 · ' + (period === 'last' ? '最近一年' : period) + ' / 全部年份共 ' + data.allTotal.toLocaleString('zh-CN') + ' 次' : total.toLocaleString('en-US') + ' contributions · ' + (period === 'last' ? 'past year' : period) + ' / ' + data.allTotal.toLocaleString('en-US') + ' across all years';
+    summary.textContent = lang === 'zh' ? total.toLocaleString('zh-CN') + ' 次贡献 · 最近一年' : total.toLocaleString('en-US') + ' contributions in the past year';
     const updated = new Date(data.updatedAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US', {timeZone:'Asia/Shanghai', dateStyle:'medium', timeStyle:'short'});
     const status = refreshing ? (lang === 'zh' ? '刷新中' : 'Refreshing') : feedStatus === 'live' ? (lang === 'zh' ? '已加载最新快照' : 'Latest snapshot loaded') : (lang === 'zh' ? '已保存快照' : 'Saved snapshot');
     caption.textContent = range + ' · ' + status + ': ' + updated + ' (UTC+8) · ' + (lang === 'zh' ? 'GitHub 数据每小时同步' : 'GitHub sync scheduled hourly');
@@ -96,7 +85,6 @@
       renderActivity(currentLanguage);
     }
   }
-  periodSelect.addEventListener('change', () => renderActivity(currentLanguage));
   refreshButton.addEventListener('click', refreshActivity);
   const refreshIfDue = () => {
     if (!document.hidden && Date.now() - lastAttempt >= 3600000) refreshActivity();

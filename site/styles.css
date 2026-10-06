@@ -166,11 +166,11 @@ img[src$="kafka.svg"] { filter:invert(1); }
 @media(max-width:800px) { .hero { height:500px; } .hero h1 { font-size:60px; } .hero-profile .hero-copy { left:22px; right:22px; bottom:55px; } }
 @media(max-width:560px) { .hero { height:510px; } .hero h1 { font-size:52px; } .hero-background { background-position:65% center; background-size:auto 100%; } .hero-background::after { background:linear-gradient(0deg,#0a0a0afa 2%,#0a0a0a7a 85%); } .activity-graph { gap:2px; grid-template-rows:repeat(7,9px); } .brand { font-size:15px; } }
 .activity-controls { grid-column:1/-1; display:flex; align-items:center; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--muted); }
-.activity-controls select, .activity-controls button { color:var(--text); background:#171217; border:1px solid #494449; border-radius:4px; padding:8px 12px; font:inherit; }
+.activity-controls button { color:var(--text); background:#171217; border:1px solid #494449; border-radius:4px; padding:8px 12px; font:inherit; }
 .activity-controls a { margin-left:auto; color:var(--pink); }
 .activity-controls button:disabled { opacity:.5; cursor:wait; }
 .activity-summary { grid-column:1/-1; margin:0; color:var(--text); font-size:14px; }
-.activity-controls select:focus-visible { outline:2px solid var(--pink); outline-offset:4px; }
+.activity-controls button:focus-visible { outline:2px solid var(--pink); outline-offset:4px; }
 @media(max-width:800px) { .activity-controls { margin-top:25px; } .activity-summary { margin-top:20px; } }
 @media(max-width:440px) { .activity-controls a { margin-left:0; flex-basis:100%; } }
 /* Preserve native hidden behavior when component styles set display. */
