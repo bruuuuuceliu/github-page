@@ -12,7 +12,9 @@ The optional `scripts/verify-browser.cjs` smoke test uses an existing Playwright
 
 ## Publish
 
-The workflow in `.github/workflows/pages.yml` publishes only `site/` when changes are pushed to `main`. In the GitHub repository, set **Settings → Pages → Source → GitHub Actions**. The expected project URL is https://bruuuuuceliu.github.io/github-page/ once Pages is enabled.
+The live site is https://bruuuuuceliu.github.io/github-page/. GitHub Pages is configured to use GitHub Actions. Every push to `main` runs syntax and contribution-sync tests, then publishes `site/` through `.github/workflows/pages.yml`. Manual deployment is available in Actions → Deploy GitHub project page → Run workflow.
+
+The public repository starts with the current project files. Earlier development history is preserved separately in the private `github-page-private-archive` repository.
 
 All asset paths are relative so the site works at a repository subpath or a custom domain.
 
