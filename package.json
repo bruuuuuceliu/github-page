@@ -1,0 +1,10 @@
+{
+  "name": "bruce-liu-projects",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Bilingual GitHub project page for Bruce Liu",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "check": "node --check site/app.js && node --check site/activity-api.js && node --check site/activity-data.js && node --check scripts/serve.mjs"
+  }
+}
