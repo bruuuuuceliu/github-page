@@ -25,7 +25,8 @@ Technology logos are stored locally under `site/assets/icons/` from [Devicon](ht
 - `site/index.html`: public project page structure and English copy.
 - `site/app.js`: Chinese translations and language preference.
 - `site/styles.css`: dark visual system, responsive layout, focus states, and project cards.
-- `site/assets/background.webp`: the supplied image cropped to a central-head background.
+- `site/assets/ink-atlas-background.svg`: an original authored ink, drafting, teal, and fuchsia composition used as the hero background.
+- `site/assets/ink-atlas/`: locally bundled Bodoni/Barlow font files and licensed Ink Atlas material used by the visual system.
 
 The project list features the public EvoAgentX repository. The page intentionally omits résumé downloads, internal project names, salary information, and hiring-oriented copy.
 

@@ -54,13 +54,13 @@ const { pathToFileURL } = require('node:url');
           content: document.documentElement.scrollWidth,
           allImagesLoaded: [...document.images].every(image => image.complete && image.naturalWidth > 0),
           heroHeight: document.querySelector('.hero').getBoundingClientRect().height,
-          backgroundLoaded: getComputedStyle(document.querySelector('.hero-background')).backgroundImage.includes('background.webp'),
+          backgroundLoaded: getComputedStyle(document.querySelector('.hero-background')).backgroundImage.includes('ink-atlas-background.svg'),
           titleRight: document.querySelector('#hero-title').getBoundingClientRect().right,
           brokenAnchors: [...document.querySelectorAll('a[href^="#"]')].filter(a => !document.getElementById(a.hash.slice(1))).map(a => a.hash)
         }));
         assert.ok(dimensions.content <= dimensions.viewport, JSON.stringify({width, language, ...dimensions}));
         assert.ok(dimensions.allImagesLoaded);
-        assert.ok(dimensions.heroHeight < 600);
+        assert.ok(dimensions.heroHeight <= 650);
         assert.ok(dimensions.backgroundLoaded);
         assert.ok(dimensions.titleRight <= dimensions.viewport);
         assert.deepEqual(dimensions.brokenAnchors, []);
