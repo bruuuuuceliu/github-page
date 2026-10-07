@@ -1,26 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Abstract ink, teal drafting rings, and fuchsia architectural forms">
-  <rect width="1600" height="900" fill="#081013"/>
-  <path d="M910 0h690v900H790c74-176 104-344 89-497C865 250 876 118 910 0Z" fill="#132b2d"/>
-  <path d="M1102-40c138 102 246 170 498 204v246c-158-7-295-47-444-118-125-60-207-121-270-196Z" fill="#ff2858" opacity=".87"/>
-  <path d="M1090 900c62-180 88-330 62-479-23-133-4-248 51-363 92 70 169 141 242 230 74 90 122 181 155 282v330Z" fill="#0b6c62" opacity=".92"/>
-  <path d="M1088 900c38-199 36-362-12-486-43-112-36-224 24-332 55 61 100 129 133 209 44 106 64 212 72 328v281Z" fill="#66f0d1" opacity=".2"/>
-  <g fill="none" stroke="#66f0d1" opacity=".47">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Abstract umber, aged gold drafting rings, and oxide red architectural forms">
+  <rect width="1600" height="900" fill="#2d1a13"/>
+  <path d="M910 0h690v900H790c74-176 104-344 89-497C865 250 876 118 910 0Z" fill="#493323"/>
+  <path d="M1102-40c138 102 246 170 498 204v246c-158-7-295-47-444-118-125-60-207-121-270-196Z" fill="#984838" opacity=".87"/>
+  <path d="M1090 900c62-180 88-330 62-479-23-133-4-248 51-363 92 70 169 141 242 230 74 90 122 181 155 282v330Z" fill="#c7a66e" opacity=".8"/>
+  <path d="M1088 900c38-199 36-362-12-486-43-112-36-224 24-332 55 61 100 129 133 209 44 106 64 212 72 328v281Z" fill="#d3b48e" opacity=".22"/>
+  <g fill="none" stroke="#d3b48e" opacity=".63">
     <circle cx="1124" cy="402" r="245" stroke-width="2"/>
     <circle cx="1124" cy="402" r="296" stroke-width="1"/>
     <circle cx="1124" cy="402" r="349" stroke-width="1"/>
     <path d="M1124 38v728M760 402h728M865 143l518 518M865 661l518-518" stroke-width="1"/>
   </g>
-  <g fill="none" stroke="#e7e5dc" opacity=".24" stroke-width="2">
+  <g fill="none" stroke="#ddcdae" opacity=".34" stroke-width="2">
     <path d="M118 758c190-188 329-290 500-372 161-77 321-128 517-150"/>
     <path d="M120 790c198-185 345-271 530-343 164-64 317-95 504-106"/>
     <path d="M126 824c199-164 351-239 535-297 152-48 298-64 487-59"/>
   </g>
-  <g fill="#f4f0e8" opacity=".83">
+  <g fill="#eee7d8" opacity=".88">
     <path d="M1285 224h92l-37 52-44-18z"/>
     <path d="M1310 632h144l-29 34h-133z"/>
   </g>
-  <path d="M0 770c188-38 330-48 480-36 128 11 251 9 393-28l-36 194H0Z" fill="#101719" opacity=".94"/>
-  <g stroke="#f4f0e8" opacity=".4" stroke-width="1">
+  <path d="M0 770c188-38 330-48 480-36 128 11 251 9 393-28l-36 194H0Z" fill="#211812" opacity=".94"/>
+  <g stroke="#ddcdae" opacity=".48" stroke-width="1">
     <path d="M45 84h260M45 95h180M1370 80h176M1418 91h128"/>
     <path d="M45 111v67M55 111v41M1544 704v94M1534 748v50"/>
   </g>
