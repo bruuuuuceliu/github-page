@@ -1,6 +1,6 @@
 # Bruce Liu — GitHub projects
 
-A small self-hosted GitHub project page for Bruce Liu. It uses the visual direction of the supplied reference: a dark image-led header followed by project cards, a real GitHub contribution calendar, technical focus, and a short about section.
+A small self-hosted GitHub project page for Bruce Liu. Its Ink Atlas composition combines bright warm paper, aged gold drafting, transparent editorial panels, a real GitHub contribution calendar, technical focus, and a short about section.
 
 The page is built with plain HTML, CSS, and JavaScript. There is no build step or external runtime dependency.
 
@@ -24,9 +24,11 @@ Technology logos are stored locally under `site/assets/icons/` from [Devicon](ht
 
 - `site/index.html`: public project page structure and English copy.
 - `site/app.js`: Chinese translations and language preference.
-- `site/styles.css`: dark visual system, responsive layout, focus states, and project cards.
-- `site/assets/ink-atlas-background.svg`: an original authored ink, drafting, teal, and fuchsia composition used as the hero background.
-- `site/assets/ink-atlas/`: locally bundled Bodoni/Barlow font files and licensed Ink Atlas material used by the visual system.
+- `site/styles.css`: gilded editorial surfaces, responsive layout, focus states, and shared material.
+- `site/assets/ink-atlas-background.svg`: an original authored umber, aged gold, drafting, and oxide-red composition used as the hero background.
+- `site/assets/ink-atlas/`: locally bundled Bodoni/Barlow fonts, cutout icons, and original drafting/print assets with their licenses. The usage manifest records SVG sources and hashes. Small SVG masks are embedded in CSS so direct file previews work.
+
+The sections share a continuous warm background. Transparent reading planes, open borders, a torn intro strip, a network drafting emblem, and bracketed activity framing follow the current Ink Atlas surface guidance. Decorative geometry stays outside semantic reading and control containers.
 
 The project list features the public EvoAgentX repository. The page intentionally omits résumé downloads, internal project names, salary information, and hiring-oriented copy.
 
