@@ -1,7 +1,7 @@
 {
-  "origin": "Ink Atlas frontend skill, assets/frontend-kit",
+  "origin": "Ink Atlas frontend kit and original page-specific geometry",
   "license": "MIT for original SVGs; see LICENSE.txt",
-  "use": "CSS masks and decorative background; SVG content embedded for direct-file previews",
+  "use": "Decorative backgrounds and embedded icon masks for direct-file previews",
   "resources": [
     {
       "path": "assets/ink-atlas/graphics/corner-brackets.svg",
@@ -9,34 +9,14 @@
       "sha256": "93e2a18bf6394877c67974bcf9a277989e712f43ef07764b273e3a3da16b7ab3"
     },
     {
-      "path": "assets/ink-atlas/graphics/ink-swipe.svg",
-      "bytes": 374,
-      "sha256": "011628ccc6b1b1835a8a3eb397f8243234959c9ed0c9cc679b100ec8a4e204a9"
-    },
-    {
       "path": "assets/ink-atlas/graphics/orbital-draft.svg",
       "bytes": 2246,
       "sha256": "17f0fe941e42f20f99c9a9d589b54f2262892a98408f7897a8ddaa773786275c"
     },
     {
-      "path": "assets/ink-atlas/graphics/paint-band.svg",
-      "bytes": 4160,
-      "sha256": "b77dfb12518997733a535d8e7c71ccc73ff669d4781dba3af9518b26d24135cb"
-    },
-    {
-      "path": "assets/ink-atlas/graphics/route-line.svg",
-      "bytes": 570,
-      "sha256": "c1abb22d2129ac7d12e6f422d797e1742430f803d3e42971d491ef8e1b54b81f"
-    },
-    {
       "path": "assets/ink-atlas/graphics/scratch-field.svg",
       "bytes": 7069,
       "sha256": "9705e22dd0d7d0253b9b2c28efe7d19a8fa33f47844b9b59ec4fa6a6d997e639"
-    },
-    {
-      "path": "assets/ink-atlas/graphics/torn-cartouche.svg",
-      "bytes": 590,
-      "sha256": "f367e5bbbb32fe68b8d4f9174b478fe02f7658d4e6dadee16e6cc8ac2cdbfedc"
     },
     {
       "path": "assets/ink-atlas/icons/arrow-right.svg",
@@ -72,6 +52,22 @@
       "path": "assets/ink-atlas/icons/search.svg",
       "bytes": 213,
       "sha256": "def59a1d6f932d641f6bf24c10b5a7f68bf5da9149d20ee26ec8db381c7ee774"
+    },
+    {
+      "path": "assets/ink-atlas/graphics/intro-plane.svg",
+      "origin": "Original geometry authored for Bruce Liu project page",
+      "license": "MIT",
+      "transformations": "None; local SVG decorative background",
+      "bytes": 274,
+      "sha256": "264ee59691e8dc58df7282e274fdcfcb5b9e37d1da6d275535d0588d92e167e7"
+    },
+    {
+      "path": "assets/ink-atlas/graphics/about-waypoint.svg",
+      "origin": "Original geometry authored for Bruce Liu project page",
+      "license": "MIT",
+      "transformations": "None; local SVG decorative background",
+      "bytes": 238,
+      "sha256": "b0bd98a9e77ef642063291900482e7ab3bf8557588b3709953188736fdcbfa6a"
     }
   ]
 }

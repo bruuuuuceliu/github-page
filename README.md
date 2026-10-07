@@ -28,7 +28,7 @@ Technology logos are stored locally under `site/assets/icons/` from [Devicon](ht
 - `site/assets/ink-atlas-background.svg`: an original authored umber, aged gold, drafting, and oxide-red composition used as the hero background.
 - `site/assets/ink-atlas/`: locally bundled Bodoni/Barlow fonts, cutout icons, and original drafting/print assets with their licenses. The usage manifest records SVG sources and hashes. Small SVG masks are embedded in CSS so direct file previews work.
 
-The sections share a continuous warm background. Transparent reading planes, open borders, a torn intro strip, a network drafting emblem, and bracketed activity framing follow the current Ink Atlas surface guidance. Decorative geometry stays outside semantic reading and control containers.
+The sections share a continuous warm background. Transparent reading planes, open borders, a quiet angular intro plane, a network drafting emblem, and bracketed activity framing follow the current Ink Atlas surface guidance. The About heading uses an original geometric waypoint motif. Decorative geometry stays outside semantic reading and control containers.
 
 The project list features the public EvoAgentX repository. The page intentionally omits résumé downloads, internal project names, salary information, and hiring-oriented copy.
 
