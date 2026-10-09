@@ -86,14 +86,14 @@ nav a{padding:12px 0}
 
 .activity-section{position:relative;background:transparent}
 .activity-inner{position:relative;isolation:isolate;display:grid;grid-template-columns:1fr auto;gap:24px}
-.activity-inner::before{content:'';position:absolute;inset:18px 6% 32px 3%;z-index:-1;background:#746d5f12;transform:skewY(-1.5deg)}
+.activity-inner::before{display:none}
 .activity-controls{display:flex;align-items:center;gap:22px;align-self:end;font:12px var(--mono)}
 .activity-controls button{display:flex;align-items:center;gap:9px;min-height:44px;padding:9px 13px;background:#f7f1e4;border:0;border-bottom:2px solid var(--gold);color:var(--ink)}
 .activity-controls button:hover{background:var(--gold)}
 .activity-controls a{padding:12px 0;color:var(--muted)}
 .activity-summary{grid-column:1/-1;margin:0;font:700 22px var(--display)}
-.activity-graph{position:relative;grid-column:1/-1;display:grid;grid-auto-flow:column;grid-template-columns:repeat(var(--weeks,53),minmax(0,1fr));grid-template-rows:repeat(7,12px);gap:4px;padding:24px 18px;background:#faf6edb0;border-block:1px solid #9b896d77}
-.activity-graph::after{content:'';position:absolute;inset:-8px;pointer-events:none;background:#8e704c;mask:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20200%22%20fill%3D%22none%22%3E%3Cpath%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20d%3D%22M0%2045V0H45M255%200H300V45M300%20155V200H255M45%20200H0V155%22%2F%3E%3Cpath%20stroke%3D%22currentColor%22%20d%3D%22M7%2028V7H28M272%207H293V28M293%20172V193H272M28%20193H7V172%22%2F%3E%3C%2Fsvg%3E%0A') center/100% 100% no-repeat;opacity:.75}
+.activity-graph{position:relative;grid-column:1/-1;display:grid;grid-auto-flow:column;grid-template-columns:repeat(var(--weeks,53),minmax(0,1fr));grid-template-rows:repeat(7,12px);gap:4px;padding:24px 0;background:transparent}
+.activity-graph::after{display:none}
 .activity-graph i{display:block;background:#ccc2aa}
 .activity-graph i[data-level="1"]{background:#bda779}
 .activity-graph i[data-level="2"]{background:#9c7a47}
@@ -165,7 +165,7 @@ img[src$="kafka.svg"]{filter:none}
 .pill{font-size:11px;gap:12px;padding:9px 11px}
 .project-card{padding:18px 20px}
 .project-card p{font-size:16px}
-.activity-graph{padding:18px 10px;gap:2px;grid-template-rows:repeat(7,9px)}
+.activity-graph{padding:18px 0;gap:2px;grid-template-rows:repeat(7,9px)}
 .activity-controls{gap:17px}
 .activity-caption{font-size:10px}
 .focus-row{padding-inline:2px}
